@@ -12,7 +12,8 @@ var toDos ={};
     "use strict"
     var title = $('#Title').val();
     var content = $('#Content').val();
-    if(title == ""){
+        
+    if(title == "" || content == ""){
         alert("Please Fill all fields");
         return;
     }
@@ -25,23 +26,30 @@ var time = dt.getYear()+""+dt.getHours()+"" + dt.getMinutes() + "" + dt.getSecon
     
         var bannerImage = document.getElementById('bannerImg').value;
         //check for empty fields
+        
         var img = document.getElementById('demoImg');
         var file = document.getElementById('bannerImg').files[0];
-        //var file = document.getElementById('bannerImg').value;             
+             
         var toDoType = "image";
         var fReader = new FileReader();
         fReader.onload = function() {
-            //console.log(fReader.result);
+            console.log(fReader.result);
             document.getElementById('demoImg').src = fReader.result;
+            
             var task  = getBase64Image(img);
             var task_Object = {'id':time,'title':title,'image':task,'content':content,'timestamp':new Date()};
     todoList.push(task_Object);
     localStorage.setItem('todoList', JSON.stringify(todoList));
     toDos.display();
     }
+        if(file != undefined){
        fReader.readAsDataURL(file);
        document.getElementById('bannerImg').value ='';
        document.getElementById('title').value ='';
+        }
+//       fReader.readAsDataURL(file);
+//       document.getElementById('bannerImg').value ='';
+//       document.getElementById('title').value ='';
 }
 //get Notes array from localstorage
  toDos.getActiveTasksList =  function (){
@@ -74,7 +82,7 @@ toDos.display =  function (){
     for(var i=0; i< todos.length; i++){
         
     var imgSrc = getImage(todos[i].image);
-     $('.row').prepend($('<div style="border-style: groove;" id='+todos[i].id+'  class="col-md-4" >  <h2>'+todos[i].title+'</h2><textarea disabled id='+todos[i].id+' rows="4" cols="45" placeholder="" style="background-color: white;font-style: italic;border-style: none;">'+todos[i].content+'</textarea><br><div class="col-md-12" ><img src='+imgSrc+' id="tableBanner" class="noteImage" style="width: 100%;"/></div><text>'+todos[i].timestamp+'</text> <input type="button" value="Edit" id='+todos[i].id+' class="edit" onclick="toDos.editReminder(this.id)" /> <input type="button" class="delete" value="Delete" id='+todos[i].id+' onclick="toDos.deleteNote(this.id)" />  </div>'));
+     $('.row').prepend($('<div style="border-style: groove;" id='+todos[i].id+'  class="col-md-4" >  <h2>'+todos[i].title+'</h2><textarea disabled id='+todos[i].id+' rows="4" cols="40" placeholder="" style="background-color: white;font-style: italic;border-style: none;">'+todos[i].content+'</textarea><br><div class="col-md-12" ><img src='+imgSrc+' id="tableBanner" class="noteImage" style="width: 100%; margin-bottom: 20px;"/></div><text>'+todos[i].timestamp+'</text> <input type="button" value="Edit" id='+todos[i].id+' class="edit" onclick="toDos.editReminder(this.id)" /> <input type="button" class="delete" value="Delete" id='+todos[i].id+' onclick="toDos.deleteNote(this.id)" />  </div>'));
     }  
 }
 
@@ -140,7 +148,7 @@ toDos.displayTrash = function (){
     $( ".trash " ).empty();
      for(var i=0; i< todos.length; i++){
          var imgSrc = getImage(todos[i].image);
-     $('.trash').prepend($('<div style="border-style: groove;" id='+todos[i].id+'  class="col-md-4" >  <h2>'+todos[i].title+'</h2><textarea id='+todos[i].id+' disabled rows="4" cols="45" placeholder="" style="background-color: white;font-style: italic;border-style: none;">'+todos[i].content+'</textarea><br> <div class="col-md-12" ><img src='+imgSrc+' id="tableBanner"  style="width: 100%;" class="noteImage"/></div><text>'+todos[i].timestamp+'</text> <input type="button" value="Restore" id='+todos[i].id+' class="restore" onclick="toDos.restore(this.id)" /> <input type="button" class="delete" value="ThrowIt!!" id='+todos[i].id+' onclick="toDos.deleteForever(this.id)" />  </div>'))     ;
+     $('.trash').prepend($('<div style="border-style: groove;" id='+todos[i].id+'  class="col-md-4" >  <h2>'+todos[i].title+'</h2><textarea id='+todos[i].id+' disabled rows="4" cols="40" placeholder="" style="background-color: white;font-style: italic;border-style: none;">'+todos[i].content+'</textarea><br> <div class="col-md-12" ><img src='+imgSrc+' id="tableBanner"  style="width: 100%; margin-bottom: 20px;" class="noteImage"/></div><text>'+todos[i].timestamp+'</text> <input type="button" value="Restore" id='+todos[i].id+' class="restore" onclick="toDos.restore(this.id)" /> <input type="button" class="delete" value="ThrowIt!!" id='+todos[i].id+' onclick="toDos.deleteForever(this.id)" />  </div>'))     ;
     }    
 }
 
