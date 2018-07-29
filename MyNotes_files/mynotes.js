@@ -11,7 +11,7 @@ var toDos ={};
     "use strict"
     var title = $('#Title').val();
     var content = $('#Content').val();
-    if(title == ""){
+    if(title == "" || content == ""){
         alert("Please Fill all fields");
         return;
     }
@@ -27,7 +27,8 @@ var time = dt.getYear()+""+dt.getHours()+"" + dt.getMinutes() + "" + dt.getSecon
 nd.toLocaleString();
         var t = nd.toLocaleString();
         if($("#bannerImg").val() == ''){
-            alert($("#bannerImg").val());
+
+            alert("Please add image as it's mandatory");
         }
         
         var bannerImage = document.getElementById('bannerImg').value;
